@@ -5926,14 +5926,32 @@ document.addEventListener('click', function (evento) {
         });
         if (casilla.checked) {
             municipiosSeleccionadosAtlas.add(casilla.dataset.municipio);
+            // La capa municipal base contiene solo los contornos; reincorporarla
+            // hace que volver a marcar el municipio también restaure su línea.
+            if (capaMunicipal && !layer_DivisinMunicipal_43.hasLayer(capaMunicipal)) {
+                layer_DivisinMunicipal_43.addLayer(capaMunicipal);
+            }
             if (capaMunicipal && !map.hasLayer(layer_DivisinMunicipal_43) && !map.hasLayer(capaMunicipal)) {
                 map.addLayer(capaMunicipal);
             }
         } else {
             municipiosSeleccionadosAtlas.delete(casilla.dataset.municipio);
-            if (capaMunicipal && !map.hasLayer(layer_DivisinMunicipal_43) &&
-                map.hasLayer(capaMunicipal) && municipioSeleccionado !== capaMunicipal) {
-                map.removeLayer(capaMunicipal);
+            if (capaMunicipal) {
+                if (municipioSeleccionado === capaMunicipal) {
+                    restaurarEstiloPoligono(capaMunicipal);
+                    municipioSeleccionado = null;
+                }
+                if (highlightLayer === capaMunicipal) {
+                    restaurarEstiloPoligono(capaMunicipal);
+                    highlightLayer = null;
+                }
+                // Quitar el polígono de la capa base elimina su contorno sin
+                // afectar el relleno de la macro o microrregión que queda debajo.
+                if (layer_DivisinMunicipal_43.hasLayer(capaMunicipal)) {
+                    layer_DivisinMunicipal_43.removeLayer(capaMunicipal);
+                }
+                // Si estaba añadida por separado (capa municipal base oculta), quitarla también.
+                if (map.hasLayer(capaMunicipal)) map.removeLayer(capaMunicipal);
             }
         }
         actualizarResaltadoMunicipalAtlas(seccion.dataset.macro, seccion.dataset.tipo);
