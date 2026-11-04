@@ -232,13 +232,30 @@
 }
 #lista-sugerencias {
     background-color: #ffffff !important;
-    border-radius: 0 0 8px 8px;
+    display: none;
+    margin-top: 3px;
+    border: 1px solid #d6d0d5;
+    border-radius: 8px;
     max-height: 220px;
-    overflow-y: auto;
+    overflow: hidden;
     box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     position: relative;
     z-index: 1200;
 }
+
+#lista-sugerencias:not(:empty) {display: block;}
+
+#lista-sugerencias .lista-sugerencias-scroll {
+    max-height: 218px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    scrollbar-width: auto;
+    scrollbar-color: #b88b5b #eaeaea;
+}
+
+#lista-sugerencias .lista-sugerencias-scroll::-webkit-scrollbar-track {background: #eaeaea; border-radius: 8px;}
+#lista-sugerencias .lista-sugerencias-scroll::-webkit-scrollbar-thumb {background: #b88b5b; border-radius: 8px;}
 
 .sugerencia-item {
     padding: 10px 15px;
@@ -253,6 +270,10 @@
 .sugerencia-item:hover {
     background-color: rgb(135, 35, 65) !important;
     color: #ffffff !important;
+}
+
+.sugerencia-item:last-child {
+    border-bottom: none;
 }
         /* DISEÑO GENERAL DEL CONTENEDOR */
         #buscador-contenedor {
@@ -1170,6 +1191,57 @@
 #atlas-analisis .ae-micro-view-split .ae-municipalities-list-box{padding:0;border:0;border-radius:0;background:transparent}
 @media(max-width:900px){#atlas-analisis .ae-distribution[data-panel="territorial"].ae-micro-view-split{grid-template-columns:minmax(0,.85fr) minmax(0,1.3fr)}#atlas-analisis .ae-distribution[data-panel="territorial"].ae-micro-view-split>.ae-territorial-municipalities-card{padding:18px}}
 @media(max-width:700px){#atlas-analisis .ae-distribution[data-panel="territorial"].ae-micro-view-split{grid-template-columns:minmax(0,1fr)}#atlas-analisis .ae-distribution[data-panel="territorial"].ae-micro-view-split>.ae-territorial-micro-map-card,#atlas-analisis .ae-distribution[data-panel="territorial"].ae-micro-view-split>.ae-territorial-municipalities-card{grid-column:1}#atlas-analisis .ae-territorial-micro-map-card .ae-micro-detail-map{min-height:220px}}
+</style>
+
+<style>
+/* Lista de coincidencias del buscador de domicilios: misma apariencia que el buscador municipal. */
+body ul.photon-autocomplete {
+    box-sizing: border-box !important;
+    list-style: none !important;
+    margin: 3px 0 0 !important;
+    padding: 0 !important;
+    border: 1px solid #d6d0d5 !important;
+    border-radius: 8px !important;
+    background: #fff !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,.15) !important;
+    max-height: 220px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    overscroll-behavior: contain;
+    scrollbar-width: auto;
+    scrollbar-color: #b88b5b #eaeaea;
+    font-family: 'Gilroy', Arial, sans-serif !important;
+}
+body ul.photon-autocomplete::-webkit-scrollbar-track {background:#eaeaea; border-radius:8px;}
+body ul.photon-autocomplete::-webkit-scrollbar-thumb {background:#b88b5b; border-radius:8px;}
+body ul.photon-autocomplete li {
+    box-sizing: border-box !important;
+    display: block !important;
+    list-style: none !important;
+    margin: 0 !important;
+    padding: 10px 15px !important;
+    border: 0 !important;
+    border-bottom: 1px solid #f0f0f0 !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    color: #333 !important;
+    font: 400 14px/1.4 'Gilroy', Arial, sans-serif !important;
+    cursor: pointer;
+}
+body ul.photon-autocomplete li strong {font-weight:400 !important;}
+body ul.photon-autocomplete li small {display:block; margin-top:2px; color:#736a6f; font-size:12px; font-weight:400;}
+body ul.photon-autocomplete li.on,
+body ul.photon-autocomplete li:hover {
+    background: #872341 !important;
+    color: #fff !important;
+}
+body ul.photon-autocomplete li.on strong,
+body ul.photon-autocomplete li:hover strong,
+body ul.photon-autocomplete li.on small,
+body ul.photon-autocomplete li:hover small {color:#fff !important;}
+body ul.photon-autocomplete li:last-child {border-bottom:0 !important;}
+body ul.photon-autocomplete li.photon-no-result {cursor:default;}
+body ul.photon-autocomplete li.photon-attribution {padding:7px 12px !important; font-size:11px !important;}
 </style>
 </head>
   <body>
@@ -5558,6 +5630,12 @@ measureControl.addTo(map);
             console.log(e);
             e.target.input.value = z;
         });
+        var listaResultadosDomicilio = photonControl.search && photonControl.search.resultsContainer;
+        if (listaResultadosDomicilio) {
+            listaResultadosDomicilio.addEventListener('wheel', function(evento) {
+                evento.stopPropagation();
+            }, { passive: true });
+        }
         var search = document.getElementsByClassName("leaflet-photon leaflet-control")[0];
         search.classList.add("leaflet-control-search")
         search.style.display = "flex";
@@ -5768,6 +5846,8 @@ document.getElementById('input-busqueda').addEventListener('input', function(e) 
     });
 
     // Desplegamos las sugerencias filtradas
+    var listaResultados = document.createElement('div');
+    listaResultados.className = 'lista-sugerencias-scroll';
     coincidencias.forEach(function(item) {
         var div = document.createElement('div');
         div.className = 'sugerencia-item';
@@ -5786,8 +5866,9 @@ document.getElementById('input-busqueda').addEventListener('input', function(e) 
             document.getElementById('input-busqueda').value = item.nombre;
             lista.innerHTML = '';
         };
-        lista.appendChild(div);
+        listaResultados.appendChild(div);
     });
+    if (coincidencias.length) lista.appendChild(listaResultados);
 });
 
 map.on('click', function() {
@@ -6041,6 +6122,21 @@ document.addEventListener('click', function (evento) {
             evento.stopPropagation();
             lista.innerHTML = '';
         }
+    });
+
+    // Mantiene la rueda del mouse dentro de las coincidencias; evita que el mapa intercepte el evento.
+    lista.addEventListener('wheel', function (evento) {
+        if (evento.target.closest('.lista-sugerencias-scroll')) {
+            evento.stopPropagation();
+        }
+    }, { passive: true });
+
+    lista.addEventListener('pointerover', function (evento) {
+        if (evento.pointerType && evento.pointerType !== 'mouse') return;
+        if (!evento.target.closest('.sugerencia-item')) return;
+        lista.querySelectorAll('.sugerencia-item.teclado-activa').forEach(function (opcion) {
+            opcion.classList.remove('teclado-activa');
+        });
     });
 })();
 </script>
