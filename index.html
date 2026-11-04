@@ -1243,6 +1243,85 @@ body ul.photon-autocomplete li:last-child {border-bottom:0 !important;}
 body ul.photon-autocomplete li.photon-no-result {cursor:default;}
 body ul.photon-autocomplete li.photon-attribution {padding:7px 12px !important; font-size:11px !important;}
 </style>
+
+
+
+<style>
+/* Foco visible de teclado en guinda/azul; se evita el aro dorado. */
+#map button:focus-visible, #map a:focus-visible, #map input:focus-visible, #map select:focus-visible,
+#panel-informacion button:focus-visible, #panel-informacion summary:focus-visible,
+#atlas-guia button:focus-visible, #atlas-analisis button:focus-visible, #atlas-analisis a:focus-visible,
+#atlas-analisis input:focus-visible, #atlas-analisis select:focus-visible,
+.leaflet-layerstree-header-pointer span:focus-visible {
+    outline: 3px solid #176b87 !important;
+    outline-offset: 2px !important;
+    box-shadow: 0 0 0 2px #fff !important;
+}
+#atlas-analisis .ae-chart .ae-mark:focus,
+#atlas-analisis .ae-chart .ae-mark:focus-visible {outline:3px solid #176b87!important;outline-offset:2px!important;}
+#map .leaflet-pane path.leaflet-interactive:focus,
+#map .leaflet-pane path.leaflet-interactive:focus-visible,
+#map .leaflet-pane svg:focus,
+#map .leaflet-pane svg:focus-visible {
+    outline: none !important;
+    outline-offset: 0 !important;
+    box-shadow: none !important;
+    filter: none !important;
+}
+#map .leaflet-pane :focus,
+#map .leaflet-pane :focus-visible {
+    outline: 0 !important;
+    outline-offset: 0 !important;
+    box-shadow: none !important;
+    filter: none !important;
+}
+/* Mantiene el zoom por arrastre, pero no dibuja su marco temporal. */
+#map .leaflet-zoom-box {
+    display: none !important;
+    border: 0 !important;
+    background: transparent !important;
+}
+.leaflet-layerstree-header-pointer span[role="button"] {cursor:pointer;}
+</style>
+
+<style>
+#map .atlas-tematico-control {position:relative!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;}
+#map .atlas-tematico-toggle {display:flex;align-items:center;justify-content:center;box-sizing:border-box;width:34px;height:34px;margin:0;padding:0;border:3px solid #fff;border-radius:8px;background:#872341;color:#fff;box-shadow:0 1px 5px #0005;cursor:pointer;}
+#map .atlas-tematico-toggle:hover {background:#961638;}
+#map .atlas-tematico-toggle svg {width:19px;height:19px;display:block;pointer-events:none;}
+#atlas-tematico {position:fixed;left:70px;top:145px;z-index:1200;width:270px;max-width:calc(100vw - 90px);height:340px;max-height:none;overflow:visible;padding:13px;border:2px solid #fff;border-radius:10px;background:#872341;color:#fff;box-shadow:0 5px 18px #0005;font:13px/1.4 Gilroy,Arial,sans-serif;}
+#atlas-tematico[hidden] {display:none!important;}
+#atlas-tematico .at-heading {display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
+#atlas-tematico .at-heading strong {font-size:15px;}
+#atlas-tematico .at-close {width:26px;height:26px;flex:0 0 26px;padding:0;border:1px solid rgba(255,255,255,.7);border-radius:6px;background:transparent;color:#fff;font:20px/1 Gilroy,Arial,sans-serif;cursor:pointer;}
+#atlas-tematico .at-close:hover {background:rgba(255,255,255,.14);}
+#atlas-tematico label {display:block;margin:8px 0 4px;font-weight:700;}
+#atlas-tematico select {display:block;width:100%;height:34px;padding:5px 8px;border:1px solid #ddd;border-radius:6px;background:#fff;color:#333;font:13px Gilroy,Arial,sans-serif;}
+#atlas-tematico select {border-radius:6px;}
+#atlas-tematico .at-select-wrap {position:relative;margin:0 0 8px;}
+#atlas-tematico .at-select-trigger {display:flex;align-items:center;justify-content:space-between;width:100%;height:34px;padding:5px 10px;border:1px solid #ddd;border-radius:6px;background:#fff;color:#333;font:13px Gilroy,Arial,sans-serif;text-align:left;cursor:pointer;}
+#atlas-tematico .at-select-trigger::after {content:"";width:7px;height:7px;border-right:2px solid #444;border-bottom:2px solid #444;transform:rotate(45deg) translateY(-2px);}
+#atlas-tematico .at-select-list {position:absolute;top:calc(100% + 3px);left:0;right:0;z-index:1300;max-height:180px;overflow:auto;padding:3px;border:1px solid #d9d9d9;border-radius:9px;background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.16);}
+#atlas-tematico .at-select-list[hidden] {display:none!important;}
+#atlas-tematico .at-select-option {display:block;width:100%;min-height:29px;padding:6px 10px;border:0;border-radius:6px;background:#fff;color:#333;font:13px Gilroy,Arial,sans-serif;text-align:left;cursor:pointer;}
+#atlas-tematico .at-select-option.is-active {background:#b88b5b;color:#fff;}
+#atlas-tematico .at-native-select {position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;}
+#atlas-tematico .at-actions {display:flex;gap:7px;margin-top:10px;}
+#atlas-tematico .at-actions button {min-height:32px;padding:6px 9px;border:1px solid #fff;border-radius:6px;background:#fff;color:#872341;font:700 12px Gilroy,Arial,sans-serif;cursor:pointer;}
+#atlas-tematico .at-actions button:hover {background:#f4e9ed;}
+#atlas-tematico .at-actions button[data-at-action="clear"] {background:transparent;color:#fff;}
+#atlas-tematico .at-actions button[data-at-action="clear"]:hover {background:rgba(255,255,255,.14);}
+#atlas-tematico .at-status {min-height:18px;margin:8px 0 0;color:rgba(255,255,255,.9);font-size:11px;}
+#atlas-tematico .at-legend {margin-top:9px;padding-top:8px;border-top:1px solid rgba(255,255,255,.35);}
+#atlas-tematico .at-legend-title {margin:0 0 6px;font-weight:700;font-size:11px;}
+#atlas-tematico .at-legend-row {display:grid;grid-template-columns:15px 1fr;align-items:center;gap:7px;margin:4px 0;font-size:11px;}
+#atlas-tematico .at-swatch {width:14px;height:14px;border:1px solid rgba(0,0,0,.25);border-radius:3px;}
+#atlas-tematico .at-legend[hidden] {display:none!important;}
+#map button:focus,#map button:focus-visible,#map a:focus,#map a:focus-visible,#panel-informacion button:focus-visible,#atlas-guia button:focus-visible,#atlas-analisis button:focus-visible,#atlas-analisis a:focus-visible {outline:none!important;outline-offset:0!important;box-shadow:none!important;}
+ #atlas-tematico {width:270px;height:250px;max-height:none;overflow:visible;}
+ #atlas-tematico .at-select-list {max-height:220px;}
+ #atlas-tematico :focus-visible {outline:none!important;outline-offset:0!important;box-shadow:none!important;}
+</style>
 </head>
   <body>
     
@@ -1429,6 +1508,10 @@ if (
             if (typeof capa.bringToFront === 'function') {
                 capa.bringToFront();
             }
+            var focoMapaActivo = document.activeElement;
+            if (focoMapaActivo && focoMapaActivo.closest && focoMapaActivo.closest('#map .leaflet-pane') && typeof focoMapaActivo.blur === 'function') {
+                focoMapaActivo.blur();
+            }
 
             // Comunicar la categoría real del polígono al catálogo.
             var props = (capa.feature || {}).properties || {};
@@ -1563,6 +1646,7 @@ if (
 
         var map = L.map('map', {
     zoomControl: false,
+    boxZoom: false,
     maxZoom: 20,
     minZoom: 8,
     maxBoundsViscosity: 1.0
@@ -1594,6 +1678,19 @@ map.setMaxBounds(limitesAtlas);
            L.DomEvent.on(divHome, 'click', function (e) {
         L.DomEvent.stopPropagation(e);
         L.DomEvent.preventDefault(e);
+        try { if (window.AtlasMapaTematico && window.AtlasMapaTematico.restablecer) window.AtlasMapaTematico.restablecer(); } catch (error) { console.error('No se pudo limpiar el mapa temático:', error); }
+        var panelTematico = document.getElementById('atlas-tematico');
+        if (panelTematico) panelTematico.hidden = true;
+        var selectorTerritorioTematico = document.getElementById('atlas-tematico-territorio');
+        var selectorIndicadorTematico = document.getElementById('atlas-tematico-indicador');
+        if (selectorTerritorioTematico) selectorTerritorioTematico.value = 'macro';
+        if (selectorIndicadorTematico) selectorIndicadorTematico.value = 'escuelas';
+        var botonAplicarTema = document.querySelector('#atlas-tematico [data-at-action="apply"]');
+        var botonQuitarTema = document.querySelector('#atlas-tematico [data-at-action="clear"]');
+        var leyendaTematica = document.getElementById('atlas-tematico-leyenda');
+        if (botonAplicarTema) botonAplicarTema.hidden = false;
+        if (botonQuitarTema) botonQuitarTema.hidden = true;
+        if (leyendaTematica) leyendaTematica.hidden = true;
         limpiarBuscadorYPanel();
         capasMicroAtlas().forEach(function (capa) { map.removeLayer(capa); });
         restaurarMunicipiosAtlas();
@@ -5608,6 +5705,7 @@ measureControl.addTo(map);
             initial: true,
             // resultsHandler: myHandler,
         }).addTo(map);
+        photonControl.input.id = 'busqueda-domicilio';
         photonControl._container.childNodes[0].style.borderRadius="10px"
         // Create a variable to store the geoJSON data
         var x = null;
@@ -5642,7 +5740,12 @@ measureControl.addTo(map);
         search.style.backgroundColor="rgba(255,255,255,0.5)" 
 
         // Create the new button element
-        var button = document.createElement("div");
+        var button = document.createElement("button");
+        button.type = "button";
+        button.title = "Buscar domicilio";
+        button.setAttribute("aria-label", "Mostrar u ocultar el buscador de domicilios");
+        button.setAttribute("aria-controls", "busqueda-domicilio");
+        button.setAttribute("aria-expanded", "false");
         button.id = "gcd-button-control";
         button.className = "gcd-gl-btn fa fa-search search-button";
 
@@ -5653,8 +5756,10 @@ measureControl.addTo(map);
         button.addEventListener("click", function (e) {
             if (last.style.display === "none") {
                 last.style.display = "block";
+                button.setAttribute("aria-expanded", "true");
             } else {
                 last.style.display = "none";
+                button.setAttribute("aria-expanded", "false");
             }
         });
 
@@ -5666,6 +5771,7 @@ map.getContainer().addEventListener('click', function (evento) {
     }
 
     photonControl.input.style.display = 'none';
+    button.setAttribute('aria-expanded','false');
     photonControl.search.hide();
     photonControl.input.blur();
 }, true);
@@ -5881,7 +5987,35 @@ document.getElementById('input-busqueda').addEventListener('search', function ()
     }
 });
 
-// Aplicar la misma selección al buscar y al hacer clic en un polígono.
+// Aplicar la misma selección con mouse, teclado y buscador.
+function prepararTecladoPoligonoAtlas(capa) {
+    if (capa._atlasTecladoPreparado) return;
+    capa._atlasTecladoPreparado = true;
+    function configurarElemento() {
+        var elemento = typeof capa.getElement === 'function' ? capa.getElement() : null;
+        if (!elemento || elemento._atlasTecladoConfigurado) return;
+        var p = capa.feature && capa.feature.properties || {};
+        var tipo = p.Municipio || p.NOM_MUN ? 'municipio' : (p.id_micro || p['Microrregión'] ? 'microrregión' : 'macrorregión');
+        var nombre = p.Municipio || p.NOM_MUN || p['Microrregión'] || p.nom_micro || p['Macrorregión'] || p.nom_macro || 'territorio';
+        // Suprime el marco nativo en cada polígono, incluidas las capas propias de QGIS.
+        // Conserva el acceso por teclado sin el rectángulo alrededor de su geometría.
+        elemento.setAttribute('tabindex','0');
+        elemento.style.setProperty('outline','none','important');
+        elemento.style.setProperty('box-shadow','none','important');
+        elemento.setAttribute('role','button');
+        elemento.setAttribute('aria-label','Consultar ' + tipo + ': ' + nombre);
+        elemento._atlasTecladoConfigurado = true;
+        elemento.addEventListener('keydown',function(evento) {
+            if (evento.key !== 'Enter' && evento.key !== ' ' && evento.code !== 'Space') return;
+            evento.preventDefault();
+            evento.stopPropagation();
+            var centro = typeof capa.getBounds === 'function' ? capa.getBounds().getCenter() : null;
+            capa.fire('click',centro ? {latlng:centro} : {});
+        });
+    }
+    configurarElemento();
+    capa.on('add',function() { window.requestAnimationFrame(configurarElemento); });
+}
 function registrarSeleccionPoligono(capa) {
     var geometria = capa.feature && capa.feature.geometry;
     if (!geometria || !/^(Polygon|MultiPolygon)$/.test(geometria.type) ||
@@ -5889,8 +6023,10 @@ function registrarSeleccionPoligono(capa) {
         return;
     }
     capa._atlasSeleccionRegistrada = true;
+    prepararTecladoPoligonoAtlas(capa);
     capa.on('click', function () {
         seleccionarPoligono(capa);
+        if (window.AtlasMapaTematico) window.AtlasMapaTematico.actualizar();
     });
 }
 map.eachLayer(registrarSeleccionPoligono);
@@ -5928,7 +6064,7 @@ document.addEventListener('click', function (evento) {
     if (!(elemento instanceof Element)) return;
 
     /* Abrir o consultar la guía conserva el territorio seleccionado. */
-    if (elemento.closest('.atlas-ayuda-control, #atlas-guia, .atlas-analisis-control, #atlas-analisis')) return;
+    if (elemento.closest('.atlas-ayuda-control, #atlas-guia, .atlas-analisis-control, #atlas-analisis, .atlas-tematico-control, #atlas-tematico')) return;
 
     /* Consultar el panel conserva la selección actual. */
     if (elemento.closest('#panel-informacion')) return;
@@ -7116,5 +7252,334 @@ document.addEventListener('keydown', function (evento) {
 })();
 
 </script>
+
+
+
+
+<script>
+(function () {
+    function habilitarControlesDeCapas() {
+        var lista = document.querySelector('.leaflet-control-layers-list');
+        if (!lista) return;
+        lista.querySelectorAll('.leaflet-layerstree-header-pointer span').forEach(function (control) {
+            if (control.dataset.atlasTeclado === '1') return;
+            control.dataset.atlasTeclado = '1';
+            control.setAttribute('tabindex','0');
+            control.setAttribute('role','button');
+            control.setAttribute('aria-label','Expandir o contraer grupo de capas');
+            control.title = 'Expandir o contraer grupo de capas';
+            control.addEventListener('keydown',function(evento) {
+                if (evento.key !== 'Enter' && evento.key !== ' ' && evento.code !== 'Space') return;
+                evento.preventDefault();
+                evento.stopPropagation();
+                control.click();
+            });
+        });
+    }
+    function iniciar() {
+        habilitarControlesDeCapas();
+        var lista = document.querySelector('.leaflet-control-layers-list');
+        if (lista && window.MutationObserver) {
+            new MutationObserver(habilitarControlesDeCapas).observe(lista,{childList:true,subtree:true});
+        }
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',iniciar,{once:true});
+    else iniciar();
+})();
+</script>
+
+<script>
+(function () {
+    if (typeof map === 'undefined' || typeof L === 'undefined' || typeof overlaysTree === 'undefined') return;
+
+    var colores = ['#F4E8D8','#D9B77E','#BE8754','#3F9882','#256259'];
+    var activo = false;
+    var dibujando = false;
+    var temporizador = 0;
+    var pane = map.createPane('atlas-mapa-tematico');
+    pane.style.zIndex = 446;
+    pane.style.pointerEvents = 'auto';
+    var grupo = L.featureGroup();
+
+    function recorrerArbol(nodos, salida) {
+        (Array.isArray(nodos) ? nodos : [nodos]).forEach(function (nodo) {
+            if (!nodo) return;
+            if (nodo.layer) salida.push(nodo.layer);
+            if (nodo.children) recorrerArbol(nodo.children,salida);
+        });
+    }
+    function capasRaiz() {
+        var salida=[];
+        recorrerArbol(overlaysTree,salida);
+        return salida.filter(function(capa,indice){return salida.indexOf(capa)===indice;});
+    }
+    function capasTerritoriales() {
+        var salida=[],visitadas=new Set();
+        function visitar(capa) {
+            if(!capa||visitadas.has(capa))return;
+            visitadas.add(capa);
+            if(capa.feature&&capa.feature.geometry&&capa.feature.properties)salida.push(capa);
+            if(typeof capa.eachLayer==='function')capa.eachLayer(visitar);
+        }
+        capasRaiz().forEach(visitar);
+        return salida;
+    }
+    function estaVisible(capa) {
+        if(map.hasLayer(capa))return true;
+        var pendientes=[capa],visitados=new Set();
+        while(pendientes.length){
+            var actual=pendientes.pop();
+            if(!actual||visitados.has(actual))continue;
+            visitados.add(actual);
+            var padres=actual._eventParents||{};
+            for(var id in padres){
+                if(map.hasLayer(padres[id]))return true;
+                pendientes.push(padres[id]);
+            }
+        }
+        return false;
+    }
+    function tipoTerritorio(p) {
+        if(p.Municipio||p.NOM_MUN||p.municipio)return 'municipio';
+        if(p.id_micro||p['Microrregión']||p.microrregion)return 'micro';
+        if(p.id_macro||p['Macrorregión']||p.macrorregion)return 'macro';
+        return '';
+    }
+    function valorNumerico(p,indicador) {
+        var campos={escuelas:['Total Escuelas'],matricula:['Matrícula Total','Matricula Total'],docentes:['Total Docentes','Total de Docentes']};
+        var valor=null;
+        campos[indicador].some(function(campo){if(p[campo]!==undefined&&p[campo]!==null&&p[campo]!==''){valor=p[campo];return true;}return false;});
+        if(typeof valor==='number')return Number.isFinite(valor)?valor:null;
+        if(valor===null)return null;
+        var normalizado=String(valor).replace(/[\s,]/g,'');
+        if(!normalizado)return null;
+        var numero=Number(normalizado);
+        return Number.isFinite(numero)?numero:null;
+    }
+    function cuantila(valores,proporcion) {
+        var posicion=(valores.length-1)*proporcion,abajo=Math.floor(posicion),arriba=Math.ceil(posicion);
+        if(abajo===arriba)return valores[abajo];
+        return valores[abajo]+(valores[arriba]-valores[abajo])*(posicion-abajo);
+    }
+    function formato(valor) {
+        return new Intl.NumberFormat('es-MX',{maximumFractionDigits:0}).format(valor);
+    }
+    function estado(texto) {
+        var elemento=document.getElementById('atlas-tematico-estado');
+        if(elemento)elemento.textContent=texto;
+    }
+    function crearLeyenda(registros,umbrales,indicador,tipo) {
+        var leyenda=document.getElementById('atlas-tematico-leyenda');
+        var titulo=document.getElementById('atlas-tematico-leyenda-titulo');
+        if(!leyenda||!titulo)return;
+        var nombres={escuelas:'Escuelas',matricula:'Matrícula',docentes:'Docentes'};
+        var tipos={macro:'Macrorregiones',micro:'Microrregiones',municipio:'Municipios'};
+        titulo.textContent=nombres[indicador]+' · '+tipos[tipo]+' ('+registros.length+')';
+        leyenda.replaceChildren(titulo);
+        registros.length&&colores.forEach(function(color,indice){
+            var fila=document.createElement('div');fila.className='at-legend-row';
+            var muestra=document.createElement('span');muestra.className='at-swatch';muestra.style.backgroundColor=color;
+            var etiqueta=document.createElement('span');
+            var bajo=indice===0?null:umbrales[indice-1];
+            var alto=indice===colores.length-1?null:umbrales[indice];
+            etiqueta.textContent=indice===0?'Hasta '+formato(alto):indice===colores.length-1?'Más de '+formato(bajo):formato(bajo)+' a '+formato(alto);
+            fila.appendChild(muestra);fila.appendChild(etiqueta);leyenda.appendChild(fila);
+        });
+        leyenda.hidden=!registros.length;
+    }
+    function claseDe(valor,umbrales) {
+        for(var i=0;i<umbrales.length;i++)if(valor<=umbrales[i])return i;
+        return colores.length-1;
+    }
+    function redibujar() {
+        if(!activo||dibujando)return;
+        dibujando=true;
+        grupo.clearLayers();
+        var selectorTipo=document.getElementById('atlas-tematico-territorio');
+        var selectorIndicador=document.getElementById('atlas-tematico-indicador');
+        if(!selectorTipo||!selectorIndicador){dibujando=false;return;}
+        var tipo=selectorTipo.value,indicador=selectorIndicador.value;
+        var registros=capasTerritoriales().filter(function(capa){
+            var p=capa.feature.properties||{};
+            return tipoTerritorio(p)===tipo&&estaVisible(capa)&&valorNumerico(p,indicador)!==null;
+        }).map(function(capa){return {capa:capa,valor:valorNumerico(capa.feature.properties||{},indicador)};});
+        if(!registros.length){
+            if(map.hasLayer(grupo))map.removeLayer(grupo);
+            document.getElementById('atlas-tematico-leyenda').hidden=true;
+            estado('Activa la capa de '+({macro:'macrorregiones',micro:'microrregiones',municipio:'municipios'}[tipo])+' en el panel de capas para colorearla.');
+            dibujando=false;
+            return;
+        }
+        var valores=registros.map(function(r){return r.valor;}).sort(function(a,b){return a-b;});
+        var umbrales=[.2,.4,.6,.8].map(function(p){return cuantila(valores,p);});
+        registros.forEach(function(registro){
+            var fuente=registro.capa;
+            var seleccionado=typeof municipioSeleccionado!=='undefined'&&municipioSeleccionado===fuente;
+            var base={color:seleccionado?'#111111':'#202020',weight:seleccionado?2:1,opacity:1,fill:true,fillColor:colores[claseDe(registro.valor,umbrales)],fillOpacity:.9};
+            var copia=L.geoJSON(fuente.toGeoJSON(),{pane:'atlas-mapa-tematico',interactive:true,bubblingMouseEvents:false,style:base});
+            copia.eachLayer(function(poligono){
+                poligono.on('mouseover',function(){poligono.setStyle({color:'#102f3b',weight:2.4,fillOpacity:1});});
+                poligono.on('mouseout',function(){poligono.setStyle(base);});
+                poligono.on('click',function(evento){
+                    fuente.fire('click',{latlng:evento.latlng,originalEvent:evento.originalEvent});
+                    window.setTimeout(redibujar,0);
+                });
+            });
+            grupo.addLayer(copia);
+        });
+        if(!map.hasLayer(grupo))map.addLayer(grupo);
+        crearLeyenda(registros,umbrales,indicador,tipo);
+        estado('Cinco rangos por cuantiles según los territorios visibles.');
+        dibujando=false;
+    }
+    function programarRedibujo() {
+        if(!activo||dibujando)return;
+        window.clearTimeout(temporizador);
+        temporizador=window.setTimeout(redibujar,30);
+    }
+    function activarCapaTerritorial(tipo) {
+        var macros=[layer_1SierraNorte_42,layer_2SierraNororiental_41,layer_3ValledeSerdn_40,layer_4Angelpolis_39,layer_5ValledeAtlixcoyMatamoros_38,layer_6Mixteca_37,layer_7TehuacnySierraNegra_36];
+        function quitarMacros(){macros.forEach(function(capa){if(map.hasLayer(capa))map.removeLayer(capa);});}
+        function ponerMacros(){macros.forEach(function(capa){if(!map.hasLayer(capa))map.addLayer(capa);});}
+        if (tipo === 'micro') {
+            if (typeof capasMicroAtlas !== 'function') return false;
+            quitarMacros();
+            if (typeof restaurarMunicipiosAtlas === 'function') restaurarMunicipiosAtlas();
+            capasMicroAtlas().forEach(function(capa){if(!map.hasLayer(capa))map.addLayer(capa);});
+            if (typeof sincronizarMicrosAtlas === 'function') sincronizarMicrosAtlas();
+            return true;
+        }
+        if (tipo === 'municipio') {
+            if (typeof restaurarMunicipiosAtlas !== 'function' || typeof layer_DivisinMunicipal_43 === 'undefined') return false;
+            quitarMacros();
+            if (typeof capasMicroAtlas === 'function') capasMicroAtlas().forEach(function(capa){if(map.hasLayer(capa))map.removeLayer(capa);});
+            restaurarMunicipiosAtlas();
+            map.addLayer(layer_DivisinMunicipal_43);
+            return true;
+        }
+        if (tipo === 'macro') {
+            if (typeof capasMicroAtlas === 'function') capasMicroAtlas().forEach(function(capa){if(map.hasLayer(capa))map.removeLayer(capa);});
+            if (typeof restaurarMunicipiosAtlas === 'function') restaurarMunicipiosAtlas();
+            ponerMacros();
+        }
+        return true;
+    }
+
+    var panel, mostrarPanel;
+    var control=L.control({position:'topleft'});
+    control.onAdd=function(){
+        var caja=L.DomUtil.create('div','leaflet-control atlas-tematico-control');
+        var boton=document.createElement('button');
+        boton.type='button';boton.className='atlas-tematico-toggle';boton.title='Mapa temático';boton.setAttribute('aria-label','Abrir mapa temático');boton.setAttribute('aria-expanded','false');boton.setAttribute('aria-controls','atlas-tematico');
+        boton.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3V6Z"/><path d="M9 3v15m6-12v15"/></svg>';
+        panel=document.createElement('section');panel.id='atlas-tematico';panel.hidden=true;panel.setAttribute('aria-label','Controles del mapa temático');
+        panel.innerHTML='<div class="at-heading"><strong>Mapa temático</strong><button type="button" class="at-close" aria-label="Cerrar mapa temático" title="Cerrar">×</button></div><label for="atlas-tematico-territorio">Territorio</label><select id="atlas-tematico-territorio"><option value="macro">Macrorregiones</option><option value="micro">Microrregiones</option><option value="municipio">Municipios</option></select><label for="atlas-tematico-indicador">Indicador</label><select id="atlas-tematico-indicador"><option value="escuelas">Escuelas</option><option value="matricula">Matrícula</option><option value="docentes">Docentes</option></select><div class="at-actions"><button type="button" data-at-action="apply">Aplicar tema</button><button type="button" data-at-action="clear" hidden>Quitar tema</button></div><p class="at-status" id="atlas-tematico-estado" role="status" aria-live="polite">Elige un indicador para colorear los territorios visibles.</p><div class="at-legend" id="atlas-tematico-leyenda" hidden><p class="at-legend-title" id="atlas-tematico-leyenda-titulo"></p></div>';
+        panel.querySelectorAll('select').forEach(function(select){
+            var wrap=document.createElement('div');wrap.className='at-select-wrap';
+            var trigger=document.createElement('button');trigger.type='button';trigger.className='at-select-trigger';trigger.setAttribute('aria-haspopup','listbox');trigger.setAttribute('aria-expanded','false');trigger.textContent=select.options[select.selectedIndex].text;
+            var list=document.createElement('div');list.className='at-select-list';list.hidden=true;list.setAttribute('role','listbox');
+            var items=Array.prototype.map.call(select.options,function(option,index){var item=document.createElement('button');item.type='button';item.className='at-select-option';item.setAttribute('role','option');item.textContent=option.text;item.addEventListener('mouseenter',function(){setActive(index);});item.addEventListener('click',function(){commit(index);});list.appendChild(item);return item;});
+            var active=select.selectedIndex;
+            function setActive(index){active=(index+items.length)%items.length;items.forEach(function(item,i){item.classList.toggle('is-active',i===active);});items[active].scrollIntoView({block:'nearest'});}
+            function close(){list.hidden=true;trigger.setAttribute('aria-expanded','false');}
+            function commit(index){select.selectedIndex=index;trigger.textContent=select.options[index].text;setActive(index);close();select.dispatchEvent(new Event('change',{bubbles:true}));trigger.focus();}
+            trigger.addEventListener('click',function(){list.hidden=!list.hidden;trigger.setAttribute('aria-expanded',String(!list.hidden));if(!list.hidden){setActive(select.selectedIndex);}});
+            trigger.addEventListener('keydown',function(event){if(event.key==='ArrowDown'||event.key==='ArrowUp'){event.preventDefault();if(list.hidden){list.hidden=false;trigger.setAttribute('aria-expanded','true');setActive(select.selectedIndex);}else setActive(active+(event.key==='ArrowDown'?1:-1));}else if(event.key==='Enter'||event.key===' '){event.preventDefault();if(list.hidden){list.hidden=false;trigger.setAttribute('aria-expanded','true');setActive(select.selectedIndex);}else commit(active);}else if(event.key==='Escape'&&!list.hidden){event.preventDefault();close();}});
+            select.addEventListener('change',function(){trigger.textContent=select.options[select.selectedIndex].text;setActive(select.selectedIndex);});
+            select.classList.add('at-native-select');select.setAttribute('aria-hidden','true');select.tabIndex=-1;select.parentNode.insertBefore(wrap,select);wrap.appendChild(trigger);wrap.appendChild(list);wrap.appendChild(select);
+            setActive(active);
+        });
+        caja.appendChild(boton);caja.appendChild(panel);
+        mostrarPanel=function(mostrar){if(mostrar&&panel.style.height!=='auto')panel.style.height='250px';panel.hidden=!mostrar;boton.setAttribute('aria-expanded',String(mostrar));if(mostrar){var busqueda=document.getElementById('buscador-contenedor');var rect=busqueda?busqueda.getBoundingClientRect():null;var margen=12;var top=rect?rect.bottom+8:145;var left=rect?rect.left:70;panel.style.top=Math.max(margen,Math.min(top,window.innerHeight-120))+'px';panel.style.left=Math.max(margen,Math.min(left,window.innerWidth-300))+'px';}}
+        boton.addEventListener('click',function(){
+            if(panel.hidden)mostrarPanel(true);
+            else window.AtlasMapaTematico.restablecer();
+        });
+        document.addEventListener('atlas:seleccion-territorial',function(){mostrarPanel(false);});
+        panel.querySelector('.at-close').addEventListener('click',function(){window.AtlasMapaTematico.restablecer();boton.focus({preventScroll:true});});
+        panel.querySelector('[data-at-action="apply"]').addEventListener('click',function(){
+            var tipo=document.getElementById('atlas-tematico-territorio').value;
+            if(!activarCapaTerritorial(tipo)){
+                estado('No se pudo activar la capa de '+({macro:'macrorregiones',micro:'microrregiones',municipio:'municipios'}[tipo])+'.');
+                return;
+            }
+            activo=true;panel.style.height='auto';redibujar();
+            panel.querySelector('[data-at-action="apply"]').hidden=true;
+            panel.querySelector('[data-at-action="clear"]').hidden=false;
+        });
+        panel.querySelector('[data-at-action="clear"]').addEventListener('click',function(){
+            activo=false;panel.style.height='250px';dibujando=true;grupo.clearLayers();if(map.hasLayer(grupo))map.removeLayer(grupo);dibujando=false;
+            panel.querySelector('[data-at-action="apply"]').hidden=false;
+            panel.querySelector('[data-at-action="clear"]').hidden=true;
+            panel.querySelector('#atlas-tematico-leyenda').hidden=true;
+            estado('Mapa temático desactivado.');
+        });
+        panel.querySelector('#atlas-tematico-territorio').addEventListener('change',function(){
+            activo=false;panel.style.height='250px';
+            dibujando=true;grupo.clearLayers();if(map.hasLayer(grupo))map.removeLayer(grupo);dibujando=false;
+            panel.querySelector('[data-at-action="apply"]').hidden=false;
+            panel.querySelector('[data-at-action="clear"]').hidden=true;
+            panel.querySelector('#atlas-tematico-leyenda').hidden=true;
+            estado('Territorio actualizado. Pulsa Aplicar tema para dibujarlo.');
+        });
+        panel.querySelector('#atlas-tematico-indicador').addEventListener('change',function(){
+            activo=false;panel.style.height='250px';
+            dibujando=true;grupo.clearLayers();if(map.hasLayer(grupo))map.removeLayer(grupo);dibujando=false;
+            panel.querySelector('[data-at-action="apply"]').hidden=false;
+            panel.querySelector('[data-at-action="clear"]').hidden=true;
+            panel.querySelector('#atlas-tematico-leyenda').hidden=true;
+            estado('Indicador actualizado. Pulsa Aplicar tema para dibujarlo.');
+        });
+        L.DomEvent.disableClickPropagation(caja);L.DomEvent.disableScrollPropagation(caja);
+        return caja;
+    };
+    control.addTo(map);
+    var columna=control.getContainer().parentElement;
+    function ubicarControl(){
+        var restablecer=columna&&columna.querySelector('.leaflet-control-home');
+        if(!restablecer)return false;
+        columna.insertBefore(control.getContainer(),restablecer);
+        return true;
+    }
+    if(!ubicarControl()&&columna){
+        var observador=new MutationObserver(function(){if(ubicarControl())observador.disconnect();});
+        observador.observe(columna,{childList:true});
+    }
+    map.on('layeradd layerremove',programarRedibujo);
+    window.AtlasMapaTematico={actualizar:programarRedibujo,desactivar:function(){
+        activo=false;panel.style.height='250px';dibujando=true;grupo.clearLayers();if(map.hasLayer(grupo))map.removeLayer(grupo);dibujando=false;
+    },restablecer:function(){
+        activo=false;panel.style.height='250px';dibujando=true;grupo.clearLayers();if(map.hasLayer(grupo))map.removeLayer(grupo);dibujando=false;
+        var tipo=document.getElementById('atlas-tematico-territorio');if(tipo){tipo.value='macro';tipo.dispatchEvent(new Event('change',{bubbles:true}));}
+        var indicador=document.getElementById('atlas-tematico-indicador');if(indicador){indicador.value='escuelas';indicador.dispatchEvent(new Event('change',{bubbles:true}));}
+        var leyenda=document.getElementById('atlas-tematico-leyenda');if(leyenda)leyenda.hidden=true;
+        var aplicar=panel.querySelector('[data-at-action="apply"]');if(aplicar)aplicar.hidden=false;
+        var quitar=panel.querySelector('[data-at-action="clear"]');if(quitar)quitar.hidden=true;
+        estado('Elige un indicador para colorear los territorios visibles.');
+        mostrarPanel(false);
+    }};
+    window.addEventListener('click',function(evento){
+        if(evento.button!==undefined&&evento.button!==0)return;
+        var panel=document.getElementById('atlas-tematico');
+        if(!panel||panel.hidden||evento.target.closest&&evento.target.closest('#atlas-tematico'))return;
+        if(evento.target.closest&&evento.target.closest('.atlas-tematico-toggle'))return;
+        window.AtlasMapaTematico.restablecer();
+    },true);
+})();
+</script>
+
+<script>
+(function(){
+    function retirarFocoDelPoligono(){
+        var activo=document.activeElement;
+        if(activo&&activo.closest&&activo.closest('#map .leaflet-pane')&&typeof activo.blur==='function')activo.blur();
+        document.querySelectorAll('#map .leaflet-pane :focus').forEach(function(elemento){elemento.blur();});
+        document.querySelectorAll('#map .leaflet-zoom-box').forEach(function(elemento){elemento.remove();});
+    }
+    window.addEventListener('blur',retirarFocoDelPoligono);
+    document.addEventListener('visibilitychange',function(){if(document.hidden)retirarFocoDelPoligono();});
+})();
+</script>
+
 </body>
 </html>
